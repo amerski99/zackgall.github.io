@@ -67,19 +67,23 @@ function interpret_table( data ) {
 
 });
 </script>
-
 </head>
 <body>
 <h1 style="font-family:Arial; color: red;">Blood Drive Hall Pass Generator</h1></style>
+
 <input type="button" onclick="unhide_example()" value="Diplay Example Spreadsheet"/>
-<input type="button" onclick="hide_example()" value="Hide Spreadsheet"/><br>
+<input type="button" onclick="hide_example()" value="Hide Spreadsheet"/>
+<br>
+<div id="example" style="display:none">
+<iframe src="https://docs.google.com/spreadsheets/d/1V0pdFsHb-7YXD_yhJB-buRxndfaXprkZ271ImVoVMuY/edit?usp=sharing" embedded="true" height="500" width="100%"></iframe></div>
+<br>
 <form name="info"><p>
 School Name:<input type="text" name="school" value="ABC High School"/>
 Blood Drive Date:<input type="text" name="date" value="Wed, March 1"/>
 Draw Hours:<input type="text" name="hours" value="8:00AM - 1:00PM"/>
 Location:<input type="text" name="location" value="Gymnasium"/><br>
-  <p><b>Paste your blood drive schedule below:<br></b>
-  Your first column should be appointment time, followed by student name, then home room.<br><b>Appointment Time | Student Name | Home Room</b></p>
+  <p><b>Copy data from you blood drive schedule spreadsheet and paste it below:<br></b>
+  Your first column must be appointment time, followed by student name, then home room.<br><b>Appointment Time | Student Name | Home Room</b><br><i>Currently, this tool is unfinished and will only generate a hall pass for the first student.</i></p>
 
 
 <textarea id="pastebox"></textarea><br>
@@ -115,10 +119,3 @@ Location:<input type="text" name="location" value="Gymnasium"/><br>
     <td class="style1"><div id="homeroom"></div></td>
   </tr>
 </table></div>
-
-<div id="example" style="display:none">
-<iframe src="https://docs.google.com/spreadsheets/d/1V0pdFsHb-7YXD_yhJB-buRxndfaXprkZ271ImVoVMuY/edit?usp=sharing" embedded=true" height="500" width="1000"></iframe></div>
-
-
-</body>
-</html>
