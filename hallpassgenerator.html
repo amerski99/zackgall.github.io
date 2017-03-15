@@ -9,9 +9,8 @@
             border-spacing: 0;
             width: 75%;
             border-style: solid;
-            page-break-before: always;
+            page-break-before: always; /* page-break-before starts new print page */
         }
-        /* page-break-before starts new print page */
 
         .hp_table td {
             font-family: Arial, sans-serif;
@@ -127,18 +126,21 @@
     <br>
     <form name="info">
 
-            <p>School Name:<input type="text" name="school" value="ABC High School" /><br>
-            Blood Drive Date:<input type="text" name="date" value="Wed, March 1" /><br>
-            Draw Hours:<input type="text" name="hours" value="8:00AM - 1:00PM" /><br>
+            <p>School Name: <input type="text" name="school" value="ABC High School" /><br>
+            Blood Drive Date: <input type="text" name="date" value="Wed, March 1" /><br>
+            Draw Hours: <input type="text" name="hours" value="8:00AM - 1:00PM" /><br>
             Location: <input type="text" name="location" value="Gymnasium" /><br>
             <b>Copy data from you blood drive schedule spreadsheet and paste it below to generate hall passes for student donors which can be distributed to home room teachers on the day before blood drive.</b><br>
             Your first column must be appointment time, followed by student name, then home room.<br>
             <b>Appointment Time | Student Name | Home Room</b><br>
-            <i>Currently, this tool is unfinished and will only generate a hall pass for the first student.</i></p>
+            <i>Currently, this tool is unfinished and will only generate a hall pass for the first student.<br>Hopefully Andrew Merski can help me loop this function.</i></p>
 
 
-            <textarea id="pastebox"></textarea><br>
-            <input type="button" onclick="school_info()" value="Generate Hall Passes" /></p>
+            <textarea id="pastebox">8:00 AM	Sample Student 1	Smith
+9:00 AM	Sample Student 2	Jones
+10:00 AM	Sample Student 3	Rm 125</textarea><br>
+            <input type="button" onclick="school_info()" value="Generate Hall Passes" />
+            <br>If using the sample text, you must cut and re-paste it due to activate 'change keyup' jquery function. Hall pass will appear on new page if using print function.
     </form>
 
 
