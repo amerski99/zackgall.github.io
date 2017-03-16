@@ -2,19 +2,27 @@
 
 <head>
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.js"></script>
+
+    <script type="text/javascript" src="jquery-te-1.4.0.js"></script>
+
     <meta charset=utf-8 />
+
     <style type="text/css">
+        .page_break {
+            page-break-before: always;
+            /* page-break-before starts new print page */
+        }
+
         .hp_table {
             border-collapse: collapse;
             border-spacing: 0;
-            width: 75%;
+            width: 90%;
             border-style: solid;
-            page-break-before: always; /* page-break-before starts new print page */
         }
 
         .hp_table td {
             font-family: Arial, sans-serif;
-            font-size: 14px;
+            font-size: 15px;
             padding: 5px 20px;
             border-style: none;
             overflow: hidden;
@@ -23,27 +31,22 @@
 
         .hp_table th {
             font-family: Arial, sans-serif;
-            font-size: 14px;
-            font-weight: normal;
+            font-size: 15px;
             padding: 5px 20px;
             border-style: none;
             overflow: hidden;
             word-break: normal;
         }
 
-        .hp_table .style2 {
+        .hp_table .style {
             text-align: left;
-            vertical-align: top
-        }
-
-        .hp_table .style1 {
             vertical-align: top
         }
 
         .hp_table .title_style {
             text-align: left;
             sans-serif;
-            font-size: 20px
+            font-size: 30px
         }
 
         textarea {
@@ -55,55 +58,97 @@
         p {
             font-family: Arial, sans-serif;
         }
-    </style>
-    <style>
+
         body {
             padding-top: 10px
         }
     </style>
+
     <title>Hall Pass Generator</title>
 
     <script type="text/javascript">
-        function unhide_example() {
-            document.getElementById("example").style.display = "block"
+    function unhide_example() {
+        document.getElementById("example").style.display = "block"
+    }
+
+    function hide_example() {
+        document.getElementById("example").style.display = "none"
+    }
+
+        function reset() {
+            document.getElementById("test").innerHTML = test.html("");
         }
 
-        function hide_example() {
-            document.getElementById("example").style.display = "none"
-        }
 
         function school_info() {
             var school = document.info.school.value;
             var hours = document.info.hours.value;
             var date = document.info.date.value;
             var location = document.info.location.value;
-            document.getElementById("school").innerHTML = school + " Blood Drive Hall Pass";
-            document.getElementById("hours").innerHTML = "<b>Draw Hours: </b>" + hours;
-            document.getElementById("date").innerHTML = "<b>Date: </b>" + date;
-            document.getElementById("location").innerHTML = "<b>Location: </b>" + location;
-            document.getElementById("name").innerHTML = "<b>Name: </b>" + table[0][1]; //table[x][y]  x = row top to bottom; y = column left to right
-            document.getElementById("time").innerHTML = "<b>Appointment Time: </b>" + table[0][0];
-            document.getElementById("homeroom").innerHTML = "<b>Home Room: </b>" + table[0][2];
-            document.getElementById("hallpass").style.display = "block"
+            var count = student.length
+            for (var i = 0; i < count; i++) {
+                //makes a print page break before every 3rd hall pass
+                if (i % 2 == 0) {
+                    document.getElementById("test").innerHTML += "<div class='page_break'> </div>";
+                }
+
+                var table_string = "<table class='hp_table'><tr><th class='title_style' colspan='3'>" + school + " Blood Drive Hall Pass</th></tr><tr><td class='style'><b>Location: </b>" + location + "</td><td class='style'><b>Date: </b>" + date +
+                    "</td><td class='style'><b>Draw Hours: </b>" + hours + "</td></tr><tr><td class='style'><b>Name: </b>" + student[i] + "</td><td class='style'></td><td class='style'><b>Appointment Time: </b>" + time[i] +
+                    "</td></tr><br>"+
+                    "<tr><td class='style' colspan='3'><ul><li>Maintain a healthy iron level in your diet by eating iron rich foods, such as red meat, fish, poultry, beans, spinach, iron-fortified cereals and raisins.</li><li>Get a good night's sleep.</li>"+
+"<li>Drink an extra 16 oz. of water or nonalcoholic fluids before the donation.</li><li>Eat a healthy meal before your donation. Avoid fatty foods, such as hamburgers, fries or ice cream before donating. (Fatty foods can affect the tests we do on your blood. If there is too much fat in your blood, your donation cannot be tested for infectious diseases and the blood will not be used for transfusion.)</li><li>If you are a platelet donor, remember that your system must be free of aspirin for two days prior to donation.</li><li>Remember to bring your donor card, driver's license or two other forms of ID.</li></ul></td></tr><tr><td class='style' colspan='2'><b>Discharge Time: ___________</b></td><td class='style'></td></tr><tr><td class='style' colspan='2'><b>Staff Signature: ________________________</b></td><td class='style'><b>Home Room: </b>" +
+                    homeroom[i] + "</td></tr></table>";
+                document.getElementById("test").innerHTML += table_string + "<br>";
+            }
         }
+
+
+
+
 
         $(window).load(function() {
             jQuery('#pastebox').on('change keyup', function(e) {
                 var data = jQuery(this).val();
-                var prev = jQuery(this).data('previous-data');
 
-                var table = interpret_table(data);
+                var prev = jQuery(this).data('previous-data');
+                console.log('var prev:');
+                console.log(prev);
+                table = interpret_table(data);
             });
             // Converts a (user-pasted) string to a 2d array, utilizing line breaks and tabs.
             function interpret_table(data) {
                 console.log('Unformatted data:');
                 console.log(data);
-
+                var school = document.info.school.value
+//var table = schedule.split("\");
                 table = data.split("\n");
-
                 for (i in table) {
                     table[i] = table[i].split("\t");
+
                 }
+
+                student = [];
+                time = [];
+                homeroom = [];
+                var time_column = 0
+                var student_column = 1
+                var homeroom_column = 2
+                for (var i = 0; i < table.length; i++) { //i = each student
+                    var table2 = table[i];
+                    for (var j = 0; j < table2.length; j++) {
+                        if (j == time_column) {
+                            time.push(table[i][j]);
+                        } else if (j == student_column) {
+                            student.push(table[i][j]);
+                            console.log(student[0]);
+                        } else if (j == homeroom_column) {
+                            homeroom.push(table[i][j]);
+                        } else {
+                            break;
+                        }
+                    }
+                }
+
 
                 console.log('Formatted table:');
                 console.log(table); // check console for array strcuture
@@ -117,78 +162,27 @@
 
 <body>
     <h1 style="font-family:Arial; color: darkred;">Blood Drive Hall Pass Generator</h1></style>
-
-    <input type="button" onclick="unhide_example()" value="Diplay Example Spreadsheet" />
-    <input type="button" onclick="hide_example()" value="Hide Spreadsheet" />
-    <br>
-    <div id="example" style="display:none">
-        <iframe src="https://docs.google.com/spreadsheets/d/1V0pdFsHb-7YXD_yhJB-buRxndfaXprkZ271ImVoVMuY/edit?usp=sharing" embedded="true" height="500" width="100%"></iframe></div>
-    <br>
     <form name="info">
-
-            <p>School Name: <input type="text" name="school" value="ABC High School" /><br>
-            Blood Drive Date: <input type="text" name="date" value="Wed, March 1" /><br>
-            Draw Hours: <input type="text" name="hours" value="8:00AM - 1:00PM" /><br>
-            Location: <input type="text" name="location" value="Gymnasium" /><br>
-            <b>Copy data from you blood drive schedule spreadsheet and paste it below to generate hall passes for student donors which can be distributed to home room teachers on the day before blood drive.</b><br>
-            Your first column must be appointment time, followed by student name, then home room.<br>
-            <b>Appointment Time | Student Name | Home Room</b><br>
-            <i>Currently, this tool is unfinished and will only generate a hall pass for the first student.<br>Hopefully Andrew Merski can help me loop this function.</i></p>
-
-
-            <textarea id="pastebox">8:00 AM	Sample Student 1	Smith
-9:00 AM	Sample Student 2	Jones
-10:00 AM	Sample Student 3	Rm 125</textarea><br>
-            <br>If using the sample text, you must cut and re-paste it due to activate 'change keyup' jquery function. Hall pass will appear on new page if using print function.
+        <p>School Name: <input type="text" name="school" value="ABC High School" /><br> Blood Drive Date: <input type="text" name="date" value="Wed, March 1" /><br> Draw Hours: <input type="text" name="hours" value="8:00AM - 1:00PM" /><br> Location: <input
+                type="text" name="location" value="Gymnasium" /><br>
+            <b>Copy data from you blood drive schedule spreadsheet and paste it below to generate hall passes for student donors which can be distributed to home room teachers on the day before blood drive.</b><br> Your first column must be appointment
+            time, followed by student name, then home room.<br>
+            <b>Appointment Time | Student student | Home Room</b><br>
+          After generating your hall passes, you can print from your browser and two hall passes will print on each page.</p>
+            <input type="button" onclick="unhide_example()" value="Diplay Example Spreadsheet" />
+            <input type="button" onclick="hide_example()" value="Hide Spreadsheet" />
+            <br>
+            <div id="example" style="display:none">
+                <iframe src="https://docs.google.com/spreadsheets/d/1ycR2sDC5mo6KNLUo7a2151FlFEwSo0CaoPwGupA4Nn0/edit?usp=sharing" embedded="true" height="500" width="100%"></iframe></div>
+            <br>
+        <textarea id="pastebox"></textarea><br>
+        <input type="button" onclick="school_info()" value="Generate Hall Passes" form "info">
+        <button>Reset</button>
+        <script>
+            $("button").click(function() {
+                $("test").empty();
+            });
+        </script>
     </form>
-                <input type="button" onclick="school_info()" value="Generate Hall Passes" />
 
-
-
-    <div id="hallpass" style="display:none">
-        <table class="hp_table">
-            <tr>
-                <th class="title_style" colspan="3">
-                    <div id="school"></div>
-                </th>
-            </tr>
-            <tr>
-                <td class="style1">
-                    <div id="location"></div>
-                </td>
-                <td class="style1">
-                    <div id="date"></div>
-                </td>
-                <td class="style1">
-                    <div id="hours"></div>
-                </td>
-            </tr>
-            <tr>
-                <td class="style1">
-                    <div id="name"></div>
-                </td>
-                <td class="style1"></td>
-                <td class="style1">
-                    <div id="time"></div>
-                </td>
-            </tr>
-            <tr>
-                <td class="style1" colspan="3">Lorem ipsum dolor sit amet, labitur indoctum in eam. Eam no aeque dicunt pertinacia, ei vim errem soleat, nam id vidit dissentiunt. No vim falli efficiendi quaerendum, iracundia persequeris no mei. An consul corrumpit interesset sea, ut
-                    detracto dissentiunt pri. Mollis principes ei vim, agam esse iracundia no vix. Sea ea molestie recusabo. Choro delenit reprimique cum ad.</td>
-            </tr>
-            <tr>
-                <td class="style2" colspan="2"><b>Discharge Time: ___________</b></td>
-                <td class="style1"></td>
-            </tr>
-            <tr>
-                <td class="style2" colspan="2"><b>Staff Signature: ________________________</b></td>
-                <td class="style1">
-                    <div id="homeroom"></div>
-                </td>
-            </tr>
-        </table>
-    </div>
-
-</body>
-
-</html>
+    <div id="test"></div>
