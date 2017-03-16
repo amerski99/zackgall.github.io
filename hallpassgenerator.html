@@ -63,10 +63,10 @@
             padding-top: 10px
         }
     </style>
+<title>
+    Hall Pass Generator</title>
 
-    <title>Hall Pass Generator</title>
-
-    <script type="text/javascript">
+<script type="text/javascript">
     function unhide_example() {
         document.getElementById("example").style.display = "block"
     }
@@ -75,89 +75,89 @@
         document.getElementById("example").style.display = "none"
     }
 
-        function reset() {
-            document.getElementById("test").innerHTML = test.html("");
-        }
+    function reset() {
+        document.getElementById("test").innerHTML = test.html("");
+    }
 
 
-        function school_info() {
-            var school = document.info.school.value;
-            var hours = document.info.hours.value;
-            var date = document.info.date.value;
-            var location = document.info.location.value;
-            var count = student.length
-            for (var i = 0; i < count; i++) {
-                //makes a print page break before every 3rd hall pass
-                if (i % 2 == 0) {
-                    document.getElementById("test").innerHTML += "<div class='page_break'> </div>";
-                }
-
-                var table_string = "<table class='hp_table'><tr><th class='title_style' colspan='3'>" + school + " Blood Drive Hall Pass</th></tr><tr><td class='style'><b>Location: </b>" + location + "</td><td class='style'><b>Date: </b>" + date +
-                    "</td><td class='style'><b>Draw Hours: </b>" + hours + "</td></tr><tr><td class='style'><b>Name: </b>" + student[i] + "</td><td class='style'></td><td class='style'><b>Appointment Time: </b>" + time[i] +
-                    "</td></tr><br>"+
-                    "<tr><td class='style' colspan='3'><ul><li>Maintain a healthy iron level in your diet by eating iron rich foods, such as red meat, fish, poultry, beans, spinach, iron-fortified cereals and raisins.</li><li>Get a good night's sleep.</li>"+
-"<li>Drink an extra 16 oz. of water or nonalcoholic fluids before the donation.</li><li>Eat a healthy meal before your donation. Avoid fatty foods, such as hamburgers, fries or ice cream before donating. (Fatty foods can affect the tests we do on your blood. If there is too much fat in your blood, your donation cannot be tested for infectious diseases and the blood will not be used for transfusion.)</li><li>If you are a platelet donor, remember that your system must be free of aspirin for two days prior to donation.</li><li>Remember to bring your donor card, driver's license or two other forms of ID.</li></ul></td></tr><tr><td class='style' colspan='2'><b>Discharge Time: ___________</b></td><td class='style'></td></tr><tr><td class='style' colspan='2'><b>Staff Signature: ________________________</b></td><td class='style'><b>Home Room: </b>" +
-                    homeroom[i] + "</td></tr></table>";
-                document.getElementById("test").innerHTML += table_string + "<br>";
+    function school_info() {
+        var school = document.info.school.value;
+        var hours = document.info.hours.value;
+        var date = document.info.date.value;
+        var location = document.info.location.value;
+        var count = student.length
+        for (var i = 0; i < count; i++) {
+            //makes a print page break before every 3rd hall pass
+            if (i % 2 == 0) {
+                document.getElementById("test").innerHTML += "<div class='page_break'> </div>";
             }
+
+            var table_string = "<table class='hp_table'><tr><th class='title_style' colspan='3'>" + school + " Blood Drive Hall Pass</th></tr><tr><td class='style'><b>Location: </b>" + location + "</td><td class='style'><b>Date: </b>" + date +
+                "</td><td class='style'><b>Draw Hours: </b>" + hours + "</td></tr><tr><td class='style'><b>Name: </b>" + student[i] + "</td><td class='style'></td><td class='style'><b>Appointment Time: </b>" + time[i] +
+                "</td></tr><br>" +
+                "<tr><td class='style' colspan='3'><ul><li>Maintain a healthy iron level in your diet by eating iron rich foods, such as red meat, fish, poultry, beans, spinach, iron-fortified cereals and raisins.</li><li>Get a good night's sleep.</li>" +
+                "<li>Drink an extra 16 oz. of water or nonalcoholic fluids before the donation.</li><li>Eat a healthy meal before your donation. Avoid fatty foods, such as hamburgers, fries or ice cream before donating. (Fatty foods can affect the tests we do on your blood. If there is too much fat in your blood, your donation cannot be tested for infectious diseases and the blood will not be used for transfusion.)</li><li>If you are a platelet donor, remember that your system must be free of aspirin for two days prior to donation.</li><li>Remember to bring your donor card, driver's license or two other forms of ID.</li></ul></td></tr><tr><td class='style' colspan='2'><b>Discharge Time: ___________</b></td><td class='style'></td></tr><tr><td class='style' colspan='2'><b>Staff Signature: ________________________</b></td><td class='style'><b>Home Room: </b>" +
+                homeroom[i] + "</td></tr></table>";
+            document.getElementById("test").innerHTML += table_string + "<br>";
         }
+    }
 
 
 
 
 
-        $(window).load(function() {
-            jQuery('#pastebox').on('change keyup', function(e) {
-                var data = jQuery(this).val();
+    $(window).load(function() {
+        jQuery('#pastebox').on('change keyup', function(e) {
+            var data = jQuery(this).val();
 
-                var prev = jQuery(this).data('previous-data');
-                console.log('var prev:');
-                console.log(prev);
-                table = interpret_table(data);
-            });
-            // Converts a (user-pasted) string to a 2d array, utilizing line breaks and tabs.
-            function interpret_table(data) {
-                console.log('Unformatted data:');
-                console.log(data);
-                var school = document.info.school.value
-//var table = schedule.split("\");
-                table = data.split("\n");
-                for (i in table) {
-                    table[i] = table[i].split("\t");
+            var prev = jQuery(this).data('previous-data');
+            console.log('var prev:');
+            console.log(prev);
+            table = interpret_table(data);
+        });
+        // Converts a (user-pasted) string to a 2d array, utilizing line breaks and tabs.
+        function interpret_table(data) {
+            console.log('Unformatted data:');
+            console.log(data);
+            var school = document.info.school.value
+            //var table = schedule.split("\");
+            table = data.split("\n");
+            for (i in table) {
+                table[i] = table[i].split("\t");
 
-                }
+            }
 
-                student = [];
-                time = [];
-                homeroom = [];
-                var time_column = 0
-                var student_column = 1
-                var homeroom_column = 2
-                for (var i = 0; i < table.length; i++) { //i = each student
-                    var table2 = table[i];
-                    for (var j = 0; j < table2.length; j++) {
-                        if (j == time_column) {
-                            time.push(table[i][j]);
-                        } else if (j == student_column) {
-                            student.push(table[i][j]);
-                            console.log(student[0]);
-                        } else if (j == homeroom_column) {
-                            homeroom.push(table[i][j]);
-                        } else {
-                            break;
-                        }
+            student = [];
+            time = [];
+            homeroom = [];
+            var time_column = 0
+            var student_column = 1
+            var homeroom_column = 2
+            for (var i = 0; i < table.length; i++) { //i = each student
+                var table2 = table[i];
+                for (var j = 0; j < table2.length; j++) {
+                    if (j == time_column) {
+                        time.push(table[i][j]);
+                    } else if (j == student_column) {
+                        student.push(table[i][j]);
+                        console.log(student[0]);
+                    } else if (j == homeroom_column) {
+                        homeroom.push(table[i][j]);
+                    } else {
+                        break;
                     }
                 }
-
-
-                console.log('Formatted table:');
-                console.log(table); // check console for array strcuture
-
-                return table;
             }
 
-        });
-    </script>
+
+            console.log('Formatted table:');
+            console.log(table); // check console for array strcuture
+
+            return table;
+        }
+
+    });
+</script>
 </head>
 
 <body>
@@ -165,15 +165,16 @@
     <form name="info">
         <p>School Name: <input type="text" name="school" value="ABC High School" /><br> Blood Drive Date: <input type="text" name="date" value="Wed, March 1" /><br> Draw Hours: <input type="text" name="hours" value="8:00AM - 1:00PM" /><br> Location: <input
                 type="text" name="location" value="Gymnasium" /><br>
-            <b>Copy data from you blood drive schedule spreadsheet and paste it below to generate hall passes for student donors which can be distributed to home room teachers on the day before blood drive.</b><br> Your first column must be appointment time, followed by student name, then home room. You can display an example schedule below to copy and paste from.<br>
-            <b>Appointment Time | Student student | Home Room</b><br>
-          After generating your hall passes, you can print from your browser and two hall passes will print on each page.</p>
-            <input type="button" onclick="unhide_example()" value="Diplay Example Spreadsheet" />
-            <input type="button" onclick="hide_example()" value="Hide Spreadsheet" />
-            <br>
-            <div id="example" style="display:none">
-                <iframe src="https://docs.google.com/spreadsheets/d/1ycR2sDC5mo6KNLUo7a2151FlFEwSo0CaoPwGupA4Nn0/edit?usp=sharing" embedded="true" height="500" width="100%"></iframe></div>
-            <br>
+            <b>Copy data from you blood drive schedule spreadsheet and paste it below to generate hall passes for student donors which can be distributed to home room teachers on the day before blood drive.</b><br> Your first column must be appointment
+            time, followed by student name, then home room.<br>
+            <font style="color:blue; font-weight:bold">You can display an example schedule below to copy and paste from.</font><br>
+            <b>Appointment Time | Student student | Home Room</b><br> After generating your hall passes, you can print from your browser and two hall passes will print on each page.</p>
+        <input type="button" onclick="unhide_example()" value="Diplay Example Spreadsheet" />
+        <input type="button" onclick="hide_example()" value="Hide Spreadsheet" />
+        <br>
+        <div id="example" style="display:none">
+            <iframe src="https://docs.google.com/spreadsheets/d/1ycR2sDC5mo6KNLUo7a2151FlFEwSo0CaoPwGupA4Nn0/edit?usp=sharing" embedded="true" height="500" width="100%"></iframe></div>
+        <br>
         <textarea id="pastebox"></textarea><br>
         <input type="button" onclick="school_info()" value="Generate Hall Passes" form "info">
         <button>Reset</button>
