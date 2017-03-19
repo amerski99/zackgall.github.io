@@ -203,6 +203,11 @@
                 console.log(prev);
                 table = interpret_table(data);
             });
+            
+            $("#reset-btn").click(reset);
+            
+            $("#generate-btn").click(school_info);
+            
             // Converts a (user-pasted) string to a 2d array, utilizing line breaks and tabs.
             function interpret_table(data) {
                 console.log('Unformatted data:');
@@ -251,28 +256,30 @@
         <img src="logo.png" align="center">
         <br>
 
-            <div class="inputs">School Name: <input type="text" class="inputs" id="school" value="school"><br> Blood Drive Date:
-                <input type="text" class="inputs" id="date" /><br>
-                <div class="ui-widget"><label for="location">Location: </label><input type="text" id="location" value=""></div>Draw Hours: <input type="text" id="hours" name="hours" class="inputs" value="8:00AM - 1:00PM"><br>
-
-            <br>
-            <textarea rows="10" cols="50">8:30 AM	William Gunn	22
+            <div class="inputs">
+                School Name: <input type="text" class="inputs" id="school" value="school"><br> 
+                Blood Drive Date: <input type="text" class="inputs" id="date" /><br>
+                <div class="ui-widget">
+                    <label for="location">Location: </label>
+                    <input type="text" id="location" value="">
+                </div>
+                Draw Hours: <input type="text" id="hours" name="hours" class="inputs" value="8:00AM - 1:00PM">
+                <br><br>
+                <textarea rows="10" cols="50">8:30 AM	William Gunn	22
 8:30 AM	Ricky Wass	206
 8:45 AM	Shane Kirkham	24
 8:45 AM	Dirk Wass	27
-9:00 AM	Carissa Sutter	206</textarea><br>
-            <textarea name="styled-textarea" id="styled-textarea" onfocus="this.value=''; setbg('#fedbe5');" onblur="setbg('white')">COPY AND PASTE THE EXAMPLE TEST SCHEDULE IN TEXT AREA ABOVE.... ignore all this =====> Copy data from you blood drive schedule spreadsheet and paste it here to generate hall passes for student donors which can be distributed to home room teachers on the day before blood drive.</textarea>
-            <br>
-            <input type="button" onclick="school_info()" value="Generate Hall Passes" class="btn">
-            <button class="btn">Reset</button>
-            <script>
-                $("button").click(function() {
-                    $("test").empty();
-                })
-            </script>
+9:00 AM	Carissa Sutter	206</textarea>
+                <br>
+                <textarea name="styled-textarea" id="styled-textarea" onfocus="this.value=''; setbg('#fedbe5');" onblur="setbg('white')">COPY AND PASTE THE EXAMPLE TEST SCHEDULE IN TEXT AREA ABOVE.... ignore all this =====> Copy data from you blood drive schedule spreadsheet and paste it here to generate hall passes for student donors which can be distributed to home room teachers on the day before blood drive.</textarea>
+                <br />
+        </div>
+                <button id="generate-btn" class="btn">Generate Hall Passes</button>
+                <button id="reset-btn" class="btn">Reset</button>
+             
 
 
-        <div id="test"></div>
+            <div id="test"></div>
 
 
 
