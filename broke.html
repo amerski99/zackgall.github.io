@@ -161,23 +161,22 @@
 
 
         function reset() {
-            document.getElementById("test").innerHTML = test.html("");
+            document.getElementById("test").innerHTML = "";
         }
 
 
-
         function school_info() {
-            school = document.getElementById("school").getAttribute('value');
-            console.log(school)
-            hours = document.getElementById("hours").getAttribute('value');
-            date = document.getElementById("date").getAttribute('value');
-            location = document.getElementById("location").getAttribute('value');
+            var school = document.getElementById("school").value;
+            var hours = document.getElementById("hours").value;
+            var date = document.getElementById("date").value;
+            var location = document.getElementById("location").value;
 
-            var count = student.length
+            var count = student.length;
+			var allDatHtml = "";
             for (var i = 0; i < count; i++) {
                 //makes a print page break before every 3rd hall pass
                 if (i % 2 == 0) {
-                    document.getElementById("test").innerHTML += "<div class='page_break'> </div>";
+                    allDatHtml += "<div class='page_break'> </div>";
                 }
 
                 var table_string = "<table class='hp_table'><tr><th class='title_style' colspan='3'>" + school + " Blood Drive Hall Pass</th></tr><tr><td class='style'><b>Location: </b>" + location + "</td><td class='style'><b>Date: </b>" + date +
@@ -186,35 +185,32 @@
                     "<tr><td class='style' colspan='3'><ul><li>Maintain a healthy iron level in your diet by eating iron rich foods, such as red meat, fish, poultry, beans, spinach, iron-fortified cereals and raisins.</li><li>Get a good night's sleep.</li>" +
                     "<li>Drink an extra 16 oz. of water or nonalcoholic fluids before the donation.</li><li>Eat a healthy meal before your donation. Avoid fatty foods, such as hamburgers, fries or ice cream before donating. (Fatty foods can affect the tests we do on your blood. If there is too much fat in your blood, your donation cannot be tested for infectious diseases and the blood will not be used for transfusion.)</li><li>If you are a platelet donor, remember that your system must be free of aspirin for two days prior to donation.</li><li>Remember to bring your donor card, driver's license or two other forms of ID.</li></ul></td></tr><tr><td class='style' colspan='2'><b>Discharge Time: ___________</b></td><td class='style'></td></tr><tr><td class='style' colspan='2'><b>Staff Signature: ________________________</b></td><td class='style'><b>Home Room: </b>" +
                     homeroom[i] + "</td></tr></table>";
-              console.log(table_string)
-                document.getElementById("test").innerHTML += table_string + "<br>";
+
+                allDatHtml += table_string + "<br>";
             }
+			document.getElementById("test").innerHTML = allDatHtml;
         }
-
-
-
-
-
-        $(window).load(function() {
-            jQuery('#styled-textarea').on('change keyup', function(e) {
-                var data = jQuery(this).val();
-                var prev = jQuery(this).data('previous-data');
-                console.log('var prev:');
-                console.log(prev);
-                table = interpret_table(data);
-            });
-            // Converts a (user-pasted) string to a 2d array, utilizing line breaks and tabs.
-            function interpret_table(data) {
+		
+		// what a lovely set of globals - NOT! ha ha ha
+		// implicit globals = bad idea
+		var student = [];
+			time = [];
+			homeroom = [];
+			
+		// Converts a (user-pasted) string to a 2d array, utilizing line breaks and tabs.
+		function interpret_table(data) {
                 console.log('Unformatted data:');
                 console.log(data);
-                table = data.split("\n");
+                var table = data.split("\n");
                 for (i in table) {
                     table[i] = table[i].split("\t");
                 }
-
-                student = [];
-                time = [];
-                homeroom = [];
+				
+				// clear dat globals
+				student = [];
+				time = [];
+				homeroom = [];
+				
                 var time_column = 0
                 var student_column = 1
                 var homeroom_column = 2
@@ -241,6 +237,18 @@
                 return table;
             }
 
+
+        $(window).load(function() {
+            $('#styled-textarea').on('change keyup', function(e) {
+                var data = $(this).val();
+                var prev = $(this).data('previous-data');
+                console.log('var prev:');
+                console.log(prev);
+                table = interpret_table(data);
+            });
+			
+            $("#reset-btn").click(reset);
+            $("#generate-btn").click(school_info);
         });
     </script>
     <title>Hall Pass Generator</title>
@@ -248,35 +256,32 @@
 
 <body>
     <div class="container">
-        <img src="logo.png" align="center">
-        <br>
+        <img src="logo.png" align="center"><br />
 
-            <div class="inputs">School Name: <input type="text" class="inputs" id="school" value="school"><br> Blood Drive Date:
-                <input type="text" class="inputs" id="date" /><br>
-                <div class="ui-widget"><label for="location">Location: </label><input type="text" id="location" value=""></div>Draw Hours: <input type="text" id="hours" name="hours" class="inputs" value="8:00AM - 1:00PM"><br>
-
-            <br>
-            <textarea rows="10" cols="50">8:30 AM	William Gunn	22
+		<div class="inputs">
+			School Name: <input type="text" class="inputs" id="school" value="school"><br /> 
+			Blood Drive Date: <input type="text" class="inputs" id="date" /><br />
+			<div class="ui-widget">
+				<label for="location">Location: </label>
+				<input type="text" id="location" value="">
+			</div>
+			Draw Hours: <input type="text" id="hours" name="hours" class="inputs" value="8:00AM - 1:00PM">
+			<br><br>
+			<textarea rows="10" cols="50">8:30 AM	William Gunn	22
 8:30 AM	Ricky Wass	206
 8:45 AM	Shane Kirkham	24
 8:45 AM	Dirk Wass	27
-9:00 AM	Carissa Sutter	206</textarea><br>
-            <textarea name="styled-textarea" id="styled-textarea" onfocus="this.value=''; setbg('#fedbe5');" onblur="setbg('white')">COPY AND PASTE THE EXAMPLE TEST SCHEDULE IN TEXT AREA ABOVE.... ignore all this =====> Copy data from you blood drive schedule spreadsheet and paste it here to generate hall passes for student donors which can be distributed to home room teachers on the day before blood drive.</textarea>
-            <br>
-            <input type="button" onclick="school_info()" value="Generate Hall Passes" class="btn">
-            <button class="btn">Reset</button>
-            <script>
-                $("button").click(function() {
-                    $("test").empty();
-                })
-            </script>
+9:00 AM	Carissa Sutter	206</textarea>
+			<br />
+			<textarea name="styled-textarea" id="styled-textarea" onfocus="this.value=''; setbg('#fedbe5');" onblur="setbg('white')">COPY AND PASTE THE EXAMPLE TEST SCHEDULE IN TEXT AREA ABOVE.... ignore all this =====> Copy data from you blood drive schedule spreadsheet and paste it here to generate hall passes for student donors which can be distributed to home room teachers on the day before blood drive.</textarea>
+			<br />
+        </div>
+		<button id="generate-btn" class="btn">Generate Hall Passes</button>
+		<button id="reset-btn" class="btn">Reset</button>
+             
 
 
-        <div id="test"></div>
-
-
-
-
+		<div id="test"></div>
     </div>
 </body>
 
