@@ -1,0 +1,58 @@
+<style type="text/css">
+    .hp_table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 75%;
+        border-style: solid;
+        page-break-before: always;
+        /* page-break-before starts new print page */
+    }
+
+    .hp_table td {
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        padding: 5px 20px;
+        border-style: none;
+        overflow: hidden;
+        word-break: normal;
+    }
+
+    .hp_table th {
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        font-weight: normal;
+        padding: 5px 20px;
+        border-style: none;
+        overflow: hidden;
+        word-break: normal;
+    }
+
+    .hp_table .style2 {
+        text-align: left;
+        vertical-align: top
+    }
+
+    .hp_table .style1 {
+        vertical-align: top
+    }
+
+    .hp_table .title_style {
+        text-align: left;
+        sans-serif;
+        font-size: 20px
+    }
+
+    textarea {
+        width: 100%;
+        box-sizing: border-box;
+        min-height: 140px;
+    }
+
+    p {
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        padding-top: 10px
+    }
+</style>
